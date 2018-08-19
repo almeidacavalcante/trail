@@ -205,9 +205,9 @@
     }
 
     .btn-default.btn-fill{
-        color: $dark-gray;
+        color: $light-gray;
         background-color: $white-color;
-        @include opacity(.9);
+        @include opacity(.2);
     }
     .btn-default.btn-fill:hover,
     .btn-default.btn-fill:focus,

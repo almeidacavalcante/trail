@@ -8,6 +8,7 @@ import { SignupComponent } from './signup/signup.component';
 import { NucleoiconsComponent } from './components/nucleoicons/nucleoicons.component';
 import { LandingComponent } from './landing/landing.component';
 import { HomeComponent } from './home/home.component';
+import { CadastrarProdutoComponent } from './cadastrar-produto/cadastrar-produto.component';
 
 const routes: Routes =[
     { path: 'home',             component: HomeComponent },
@@ -15,6 +16,7 @@ const routes: Routes =[
     { path: 'signup',           component: SignupComponent },
     { path: 'nucleoicons',      component: NucleoiconsComponent },
     { path: 'landing',          component: LandingComponent },
+    { path: 'cadastro-produto', component: CadastrarProdutoComponent },
     { path: '', redirectTo: 'home', pathMatch: 'full' }
 ];
 
@@ -22,7 +24,7 @@ const routes: Routes =[
   imports: [
     CommonModule,
     BrowserModule,
-    RouterModule.forRoot(routes)
+    RouterModule.forRoot(routes),
   ],
   exports: [
   ],

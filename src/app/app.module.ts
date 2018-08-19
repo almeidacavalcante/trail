@@ -13,6 +13,7 @@ import { NucleoiconsComponent } from './components/nucleoicons/nucleoicons.compo
 import { FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HomeModule } from './home/home.module';
+import { CadastrarProdutoComponent } from './cadastrar-produto/cadastrar-produto.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { HomeModule } from './home/home.module';
     FooterComponent,
     SignupComponent,
     ProfileComponent,
+    CadastrarProdutoComponent,
   ],
   imports: [
     BrowserModule,
