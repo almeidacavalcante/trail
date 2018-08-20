@@ -9,6 +9,7 @@ import { NucleoiconsComponent } from './components/nucleoicons/nucleoicons.compo
 import { LandingComponent } from './landing/landing.component';
 import { HomeComponent } from './home/home.component';
 import { CadastrarProdutoComponent } from './cadastrar-produto/cadastrar-produto.component';
+import { ListarProdutosComponent } from './listar-produtos/listar-produtos.component';
 
 const routes: Routes =[
     { path: 'home',             component: HomeComponent },
@@ -17,6 +18,7 @@ const routes: Routes =[
     { path: 'nucleoicons',      component: NucleoiconsComponent },
     { path: 'landing',          component: LandingComponent },
     { path: 'cadastro-produto', component: CadastrarProdutoComponent },
+    { path: 'listar-produtos', component: ListarProdutosComponent },
     { path: '', redirectTo: 'home', pathMatch: 'full' }
 ];
 

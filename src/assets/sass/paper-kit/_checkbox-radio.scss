@@ -1,3 +1,5 @@
+@import url(//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
+
 .from-check,
 .form-check-radio {
     margin-bottom: 12px;
@@ -25,13 +27,13 @@
         cursor: pointer;
         border-radius: 3px;
         top: 0;
-        background-color: #AAA7A4;
+        background-color: rgb(209, 209, 209);
         border: 1px solid $light-gray;
         @include transition-opacity(0.3s, linear);
     }
     .form-check-sign::after{
-        font-family: 'FontAwesome';
-        content: "\f00c";
+        font-family: FontAwesome;
+        content: '\f00c';
         top: 0px;
         text-align: center;
         font-size: 14px;
@@ -106,7 +108,7 @@
 }
 
 .form-check-label input[type="checkbox"]:checked + .form-check-sign:before{
-    background-color: #66615B;
+    background-color: $success-color;
 }
 
 .form-check-radio input[type="radio"] + .form-check-sign:after,

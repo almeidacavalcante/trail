@@ -10,10 +10,13 @@ import { FooterComponent } from './shared/footer/footer.component';
 import { SignupComponent } from './signup/signup.component';
 import { ProfileComponent } from './profile/profile.component';
 import { NucleoiconsComponent } from './components/nucleoicons/nucleoicons.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HomeModule } from './home/home.module';
 import { CadastrarProdutoComponent } from './cadastrar-produto/cadastrar-produto.component';
+import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { ListarProdutosComponent } from './listar-produtos/listar-produtos.component'
 
 @NgModule({
   declarations: [
@@ -24,6 +27,7 @@ import { CadastrarProdutoComponent } from './cadastrar-produto/cadastrar-produto
     SignupComponent,
     ProfileComponent,
     CadastrarProdutoComponent,
+    ListarProdutosComponent,
   ],
   imports: [
     BrowserModule,
@@ -31,7 +35,9 @@ import { CadastrarProdutoComponent } from './cadastrar-produto/cadastrar-produto
     FormsModule,
     RouterModule,
     AppRoutingModule,
-    HomeModule
+    HomeModule,
+    FontAwesomeModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
