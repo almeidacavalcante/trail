@@ -1,4 +1,4 @@
-<div class="page-header" data-parallax="true" style="background-image: url('../assets/img/estoque.jpg');">
+<div class="page-header" data-parallax="true" style="background-image: url('../../assets/img/estoque.jpg');">
   <div class="filter"></div>
   <div class="container small-header">
     <div class="motto text-center">
@@ -63,7 +63,7 @@
                     <button class="btn btn-info btn-link btn-sm" ngbtooltip="View Profile" type="button">
                       <i class="fa fa-user"></i>
                     </button>
-                    <button class="btn btn-success btn-link btn-sm" ngbtooltip="Edit Profile" type="button">
+                    <button routerLink='/cadastrar-produto' [queryParams]='{id:p.id}' class="btn btn-success btn-link btn-sm" ngbtooltip="Edit Profile" type="button">
                       <i class="fa fa-edit"></i>
                     </button>
                     <button (click)="removeProduto(i)" class="btn btn-danger btn-link btn-sm" ngbtooltip="Remove" type="button">
