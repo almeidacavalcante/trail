@@ -1,51 +1,74 @@
 import { Injectable, EventEmitter } from '@angular/core';
 import { Produto } from '../models/produto';
+import { RequestService } from './api/request.service';
+import { Observable } from 'rxjs';
+import { Response, Headers } from '@angular/http';
+import { debug } from 'util';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProdutoService {
 
-  private _produtos : Array<Produto> = new Array<Produto>();
-  private _novoProdutoCadastrado : EventEmitter<Array<Produto>> = new EventEmitter();
+  private _produtos: Array<Produto> = new Array<Produto>();
+  private _novoProdutoCadastrado: EventEmitter<Array<Produto>> = new EventEmitter();
+  private _api = 'http://localhost:3000/produtos';
 
-  
-
-  constructor() {
-    this.carregarProdutosMock();
+  constructor(private requestService: RequestService) {
+    this.carregarProdutos();
   }
 
-  private carregarProdutosMock() {
-    const p1 = new Produto('Mel de Jandaíra', 'Frasco com 500ml do melhor mel de jandaíra', 15.40, 400, new Date('2019-02-02'), true);
-    const p2 = new Produto('Arroz Comil', 'Pacote de 1 kg', 2.20, 400, new Date('2020-02-02'), true);
-    const p3 = new Produto('Cerveja Heineken', 'Longneck Heineken, aproveite a pureza alemã', 4.30, 400, new Date('2019-02-02'), true);
-    const p4 = new Produto('Queijo Faixa Azul', 'Queijo azul em cilindros, especial para tira-gostos e massas', 17.40, 400, new Date('2019-03-02'), true);
-    const p5 = new Produto('Picanha Angus', 'Melhor picanha do Brasil', 44.10, 400, new Date('2018-11-11'), true);
-    const p6 = new Produto('Cerveja Heineken', 'Longneck Heineken, aproveite a pureza alemã', 4.30, 400, new Date('2019-02-02'), true);
-    const p7 = new Produto('Queijo Faixa Azul', 'Queijo azul em cilindros, especial para tira-gostos e massas', 17.40, 400, new Date('2019-03-02'), true);
-    const p8 = new Produto('Picanha Angus', 'Melhor picanha do Brasil', 44.10, 400, new Date('2018-11-11'), true);
-
-    this.produtos.push(p1, p2, p3, p4, p5, p6, p7, p8);
+  private carregarProdutos() {
+    this.getAll().subscribe((produtos: Response) => {
+      const json = produtos.json();
+      json.forEach(p => {
+        this.produtos.push(new Produto(p['_nome'], p['_descricao'], p['_preco'], p['_precoPromocional'], p['_isPromocao'],
+          p['_estoque'], new Date(p['_dataValidade']), p['_isPerecivel'], p['_isPublico'], p['_categoria'], p['_id']));
+      });
+    });
   }
 
   /**
    * adicionarProduto
    */
   public adicionarProduto(produto: Produto) {
-    this.produtos.push(produto);
+    console.log(JSON.stringify(produto));
+    const header = new Headers();
+    header.append('content-type', 'json');
+    this.requestService.post(this._api + '/add', JSON.stringify(produto), header).subscribe((res: Response) => {
+
+    });
     this.novoProdutoCadastrado.emit(this.produtos);
   }
 
-  public get produtos() : Array<Produto> {
+  /**
+   * getAll
+   */
+  public getAll(): Observable<any> {
+    return this.requestService.get(this._api + '/getAll');
+  }
+
+  /**
+   * getProdutoById
+   */
+  public getProdutoById(id: string): Produto {
+    const produtoSelecionado = this.produtos.filter((produto, index) => {
+      return produto.id === id;
+    });
+
+    return produtoSelecionado[0];
+  }
+
+  public get produtos(): Array<Produto> {
     return this._produtos;
   }
-  public set produtos(v : Array<Produto>) {
+  public set produtos(v: Array<Produto>) {
     this._produtos = v;
   }
-  public get novoProdutoCadastrado() : EventEmitter<Array<Produto>> {
+  public get novoProdutoCadastrado(): EventEmitter<Array<Produto>> {
     return this._novoProdutoCadastrado;
   }
-  public set novoProdutoCadastrado(v : EventEmitter<Array<Produto>>) {
+  public set novoProdutoCadastrado(v: EventEmitter<Array<Produto>>) {
     this._novoProdutoCadastrado = v;
   }
 }

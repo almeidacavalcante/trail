@@ -13,10 +13,14 @@ import { NucleoiconsComponent } from './components/nucleoicons/nucleoicons.compo
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HomeModule } from './home/home.module';
-import { CadastrarProdutoComponent } from './cadastrar-produto/cadastrar-produto.component';
-import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
+import { CadastrarProdutoComponent } from './produtos/cadastrar-produto/cadastrar-produto.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { ListarProdutosComponent } from './listar-produtos/listar-produtos.component'
+import { ListarProdutosComponent } from './produtos/listar-produtos/listar-produtos.component';
+import { ComponentsModule } from './components/components.module';
+import { CadastrarCategoriaComponent } from './categorias/cadastrar-categoria/cadastrar-categoria.component';
+import { FileUploadModule } from 'ng2-file-upload';
+import { HttpModule } from '@angular/http';
 
 @NgModule({
   declarations: [
@@ -28,6 +32,7 @@ import { ListarProdutosComponent } from './listar-produtos/listar-produtos.compo
     ProfileComponent,
     CadastrarProdutoComponent,
     ListarProdutosComponent,
+    CadastrarCategoriaComponent
   ],
   imports: [
     BrowserModule,
@@ -37,7 +42,10 @@ import { ListarProdutosComponent } from './listar-produtos/listar-produtos.compo
     AppRoutingModule,
     HomeModule,
     FontAwesomeModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ComponentsModule,
+    FileUploadModule,
+    HttpModule
   ],
   providers: [],
   bootstrap: [AppComponent]

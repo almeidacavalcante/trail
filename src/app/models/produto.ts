@@ -1,28 +1,43 @@
 export class Produto {
 
+    private _id: string;
     private _nome: string;
     private _descricao: string;
     private _preco: number;
+    private _precoPromocional: number;
+    private _isPromocao: boolean;
     private _estoque: number;
     private _dataValidade: Date;
     private _isPerecivel: boolean;
     private _dataCadastro: Date;
+    private _isPublico: boolean;
+    private _categoria: string;
 
     constructor(
         nome: string,
         descricao: string,
         preco: number,
+        precoPromocional: number,
+        isPromocao: boolean,
         estoque: number,
         dataValidade: Date,
-        isPerecivel: boolean
+        isPerecivel: boolean,
+        isPublico: boolean,
+        categoria: string,
+        id?: string
     ) {
+        this.id = id;
         this.nome = nome;
         this.descricao = descricao;
         this.preco = preco;
+        this.precoPromocional = precoPromocional;
+        this.isPromocao = isPromocao;
         this.estoque = estoque;
         this.dataValidade = dataValidade;
         this.isPerecivel = isPerecivel;
         this.dataCadastro = new Date();
+        this.isPublico = isPublico;
+        this.categoria = categoria;
     }
 
     public get isPerecivel(): boolean {
@@ -34,11 +49,9 @@ export class Produto {
     public get dataValidade(): Date {
         return this._dataValidade;
     }
-
     public get dataValidadeCurta(): string {
         return this._dataValidade.toLocaleDateString();
     }
-
     public set dataValidade(v: Date) {
         this._dataValidade = v;
     }
@@ -71,5 +84,35 @@ export class Produto {
     }
     public set dataCadastro(v: Date) {
         this._dataCadastro = v;
+    }
+    public get id(): string {
+        return this._id;
+    }
+    public set id(v: string) {
+        this._id = v;
+    }
+    public get precoPromocional(): number {
+        return this._precoPromocional;
+    }
+    public set precoPromocional(v: number) {
+        this._precoPromocional = v;
+    }
+    public get categoria(): string {
+        return this._categoria;
+    }
+    public set categoria(v: string) {
+        this._categoria = v;
+    }
+    public get isPublico(): boolean {
+        return this._isPublico;
+    }
+    public set isPublico(v: boolean) {
+        this._isPublico = v;
+    }
+    public get isPromocao(): boolean {
+        return this._isPromocao;
+    }
+    public set isPromocao(v: boolean) {
+        this._isPromocao = v;
     }
 }

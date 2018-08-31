@@ -1,0 +1,7 @@
+<div class="image-container">
+    <img [src]="fileUrl" alt="">
+</div>
+
+<br>
+<input type="file" style="display: none" (change)="onFileSelection($event)" multiple #filePicker>
+<button type="button" class="btn btn-outline-default btn-file btn-round" (click)="filePicker.click()">Adicionar imagens</button>

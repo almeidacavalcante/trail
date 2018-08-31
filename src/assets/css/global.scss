@@ -1,0 +1,11 @@
+.gold {
+    color: goldenrod;
+}
+
+table {
+    @media only screen and (max-width: 575px) {
+        .mobile-hidden {
+            display: none;
+        }
+    }
+}
