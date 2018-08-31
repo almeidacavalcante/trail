@@ -12,7 +12,7 @@ import { CadastrarProdutoComponent } from './produtos/cadastrar-produto/cadastra
 import { ListarProdutosComponent } from './produtos/listar-produtos/listar-produtos.component';
 import { CadastrarCategoriaComponent } from './categorias/cadastrar-categoria/cadastrar-categoria.component';
 
-const routes: Routes =[
+const routes: Routes = [
     { path: 'home',                 component: HomeComponent },
     { path: 'user-profile',         component: ProfileComponent },
     { path: 'signup',               component: SignupComponent },

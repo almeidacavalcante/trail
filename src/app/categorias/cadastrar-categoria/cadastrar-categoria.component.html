@@ -12,10 +12,10 @@
 
 
       <div class="col-md-12 mr-auto ml-auto">
-        <form [formGroup]="cadastrarProdutoForm" (submit)="cadastrarProduto(false)">
+        <form [formGroup]="cadastrarCategoriaForm" (submit)="cadastrarCategoria()">
 
           <div class="row">
-            
+
             <div class="col-md-6">
               <div class="row">
 
@@ -33,91 +33,82 @@
               <div class="row">
                 <div class="col-md-12">
                   <h6>Descrição</h6>
-                  <textarea formControlName="descricao" class="form-control" rows="4" placeholder="Detalhe o produto que está sendo cadastrado..."></textarea>
+                  <textarea formControlName="descricao" class="form-control" rows="4" placeholder="Breve descrição da categoria..."></textarea>
                   <br>
                 </div>
               </div>
 
               <div class="row">
                 <div class="col-md-12 mr-auto ml-auto">
-                  <button type="submit" class="btn btn-success btn-lg btn-fill fill">Cadastrar</button>
+                  <button type="submit" [disabled]="!cadastrarCategoriaForm.valid" class="btn btn-success btn-lg btn-fill fill">Cadastrar</button>
                 </div>
               </div>
             </div>
 
             <div class="col-md-6">
-                <div class="row">
+              <div class="row">
 
-                    <div class="col-md-12 mr-auto ml-auto">
-              
-                      <div class="row" [formGroup]="pesquisarForm">
-                        <div class="col-md-6">
-                          
-                        </div>
-                        <div class="col-md-5">
-                          <div class="input-group">
-                            <span class="input-group-addon">
-                              <i class="nc-icon nc-zoom-split"></i>
-                            </span>
-                            <input formControlName="pesquisar" type="text" class="form-control" placeholder="Digite o nome do produto...">
-                          </div>
-              
-                        </div>
-                        <div class="col-md-1">
-                          <button (click)="pesquisarProduto()" type="button" class="btn btn-success btn-md btn-fill fill">
-                            <i class="fas fa-search"></i>
-                          </button>
-                        </div>
+                <div class="col-md-12 mr-auto ml-auto">
+
+                  <div class="row" [formGroup]="pesquisarForm">
+                    <div class="col-md-6">
+
+                    </div>
+                    <div class="col-md-10">
+                      <div class="input-group">
+                        <span class="input-group-addon">
+                          <i class="nc-icon nc-zoom-split"></i>
+                        </span>
+                        <input formControlName="pesquisar" type="text" class="form-control" placeholder="Digite o nome da categoria...">
                       </div>
-                      <br>
-              
-                      <div class="row">
-                        <div class="col-md-12">
-              
-                          <table class="table">
-                            <thead>
-                              <tr>
-                                <th class="text-center">#</th>
-                                <th>Nome</th>
-                                <th>Descrição</th>
 
-                              </tr>
-                            </thead>
-                            <tbody>
-                              <!---->
-                              <tr *ngFor="let p of produtos; let i = index" class="ng-star-inserted">
-                                <td class="text-center">{{i+1}}</td>
-                                <td>{{p.nome}}</td>
-                                <td>{{p.descricao}}</td>
-
-                                <td class="td-actions text-right">
-                                  <button class="btn btn-info btn-link btn-sm" ngbtooltip="View Profile" type="button">
-                                    <i class="fa fa-user"></i>
-                                  </button>
-                                  <button routerLink='/cadastrar-produto' [queryParams]='{id:p.id}' class="btn btn-success btn-link btn-sm" ngbtooltip="Edit Profile" type="button">
-                                    <i class="fa fa-edit"></i>
-                                  </button>
-                                  <button (click)="removeProduto(i)" class="btn btn-danger btn-link btn-sm" ngbtooltip="Remove" type="button">
-                                    <i class="fa fa-times"></i>
-                                  </button>
-                                </td>
-                              </tr>
-                            </tbody>
-                          </table>
-                        </div>
-                      </div>
-              
+                    </div>
+                    <div class="col-md-2">
+                      <button (click)="pesquisarCategoria()" type="button" class="btn btn-success btn-md btn-fill fill">
+                        <i class="fas fa-search"></i>
+                      </button>
                     </div>
                   </div>
+                  <br>
+
+                  <div class="row">
+                    <div class="col-md-12">
+
+                      <table class="table">
+                        <thead>
+                          <tr>
+                            <th class="text-center">#</th>
+                            <th>Nome</th>
+                            <th>Descrição</th>
+
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <!---->
+                          <tr *ngFor="let c of categorias; let i = index" class="ng-star-inserted">
+                            <td class="text-center">{{i+1}}</td>
+                            <td>{{c.nome}}</td>
+                            <td>{{c.descricao}}</td>
+
+                            <td class="td-actions text-right">
+                              <button class="btn btn-info btn-link btn-sm" (click)="editarCategoria(c.id)" ngbtooltip="View Profile" type="button">
+                                <i class="fa fa-edit"></i></button>
+
+                              <button (click)="removerCategoria(i)" class="btn btn-danger btn-link btn-sm" ngbtooltip="Remove" type="button">
+                                <i class="fa fa-times"></i>
+                              </button>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-
-
           </div>
-
         </form>
       </div>
-
-
     </div>
   </div>
 </div>

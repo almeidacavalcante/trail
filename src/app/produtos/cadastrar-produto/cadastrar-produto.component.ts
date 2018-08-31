@@ -1,19 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, AbstractControl } from '@angular/forms';
 import { Produto } from '../../models/produto';
 import { ProdutoService } from '../../services/produto.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
-import * as moment from "moment";
+import * as moment from 'moment';
+import { CategoriaService } from '../../services/categoria.service';
+import { Categoria } from '../../models/categoria';
 
 @Component({
   selector: 'app-cadastrar-produto',
   templateUrl: './cadastrar-produto.component.html',
   styleUrls: ['./cadastrar-produto.component.scss']
 })
-export class CadastrarProdutoComponent implements OnInit {
-  
-  private _cadastrarProdutoForm : FormGroup = new FormGroup({
+export class CadastrarProdutoComponent implements OnInit, OnDestroy {
+
+  private _cadastrarProdutoForm: FormGroup = new FormGroup({
     id: new FormControl(),
     nome: new FormControl(),
     descricao: new FormControl(),
@@ -27,35 +29,51 @@ export class CadastrarProdutoComponent implements OnInit {
     isPublico: new FormControl()
   });
 
-  private _produto : Produto;
-  private _subscription : Subscription;
+  private _produto: Produto;
+  private _categorias: Array<Categoria>;
 
-  constructor(private produtoService: ProdutoService, private router: Router, private activatedRoute: ActivatedRoute) { }
+  private _subsProdutoService: Subscription;
+  private _subsCategoriaService: Subscription;
+
+
+  constructor(
+    private produtoService: ProdutoService,
+    private categoriaService: CategoriaService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute
+  ) { }
 
   ngOnInit() {
-    this.subscription = this.activatedRoute.queryParamMap.subscribe( params => {
+    this.subsProdutoService = this.activatedRoute.queryParamMap.subscribe(params => {
       console.log(params);
-      this.produto = this.produtoService.getProdutoById(params.get('id'));
-      this.carregarProduto();
-    })
+      if (params.get('id')) {
+        this.produto = this.produtoService.getProdutoById(params.get('id'));
+        this.carregarProduto();
+      }
+    });
+
+    this.categorias = this.categoriaService.categorias;
+    this.subsCategoriaService = this.categoriaService.novaCategoriaAdicionada.subscribe( categorias => {
+      this.categorias = categorias;
+    });
   }
 
   ngOnDestroy() {
-    this.subscription.unsubscribe();
+    this.subsProdutoService.unsubscribe();
+    this._subsCategoriaService.unsubscribe();
   }
 
   /**
    * cancelar
    */
   public cancelar() {
-    this.router.navigate(['/listar-produtos'])
+    this.router.navigate(['/listar-produtos']);
   }
 
   /**
    * carregarProduto
    */
   public carregarProduto() {
-    this.id.setValue(this.produto.id);
     this.nome.setValue(this.produto.nome);
     this.descricao.setValue(this.produto.descricao);
     this.preco.setValue(this.produto.preco);
@@ -76,21 +94,22 @@ export class CadastrarProdutoComponent implements OnInit {
     console.log('FORM GROUP: ', this.cadastrarProdutoForm);
 
     this.produto = new Produto(
-      this.id.value, 
-      this.nome.value, 
-      this.descricao.value, 
-      this.preco.value, 
+      this.nome.value,
+      this.descricao.value,
+      this.preco.value,
       this.precoPromocional.value,
       this.isPromocao.value,
-      this.estoque.value, 
-      new Date(this.dataValidade.value), 
-      this.isPerecivel.value, 
-      isPublico, 
-      this.categoria.value);
+      this.estoque.value,
+      new Date(this.dataValidade.value),
+      this.isPerecivel.value,
+      isPublico,
+      this.categoria.value,
+      this.id.value
+    );
 
     this.produtoService.adicionarProduto(this.produto);
 
-    this.produtoService.produtos.forEach( produto => {
+    this.produtoService.produtos.forEach(produto => {
       console.log('Produto: ', produto);
     });
 
@@ -130,19 +149,31 @@ export class CadastrarProdutoComponent implements OnInit {
   public get cadastrarProdutoForm(): FormGroup {
     return this._cadastrarProdutoForm;
   }
-  public get produto() : Produto {
+  public get produto(): Produto {
     return this._produto;
   }
-  public set produto(v : Produto) {
+  public set produto(v: Produto) {
     this._produto = v;
   }
   public get id(): AbstractControl {
     return this.cadastrarProdutoForm.get('id');
   }
-  public get subscription() : Subscription {
-    return this._subscription;
+  public get subsProdutoService(): Subscription {
+    return this._subsProdutoService;
   }
-  public set subscription(v : Subscription) {
-    this._subscription = v;
+  public set subsProdutoService(v: Subscription) {
+    this._subsProdutoService = v;
+  }
+  public get subsCategoriaService(): Subscription {
+    return this._subsCategoriaService;
+  }
+  public set subsCategoriaService(value: Subscription) {
+    this._subsCategoriaService = value;
+  }
+  public get categorias(): Array<Categoria> {
+    return this._categorias;
+  }
+  public set categorias(value: Array<Categoria>) {
+    this._categorias = value;
   }
 }

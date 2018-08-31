@@ -33,7 +33,8 @@
               "./src/assets/css/demo.css",
               "./src/assets/css/nucleo-icons.css",
               "./node_modules/@fortawesome/fontawesome-free/css/all.css",
-              "./src/assets/css/rebootstrap.scss"
+              "./src/assets/css/rebootstrap.scss",
+              "./src/assets/css/global.scss"
             ],
             "scripts": [
               "./node_modules/jquery/dist/jquery.slim.min.js",

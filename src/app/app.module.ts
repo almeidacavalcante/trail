@@ -14,11 +14,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HomeModule } from './home/home.module';
 import { CadastrarProdutoComponent } from './produtos/cadastrar-produto/cadastrar-produto.component';
-import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { ListarProdutosComponent } from './produtos/listar-produtos/listar-produtos.component'
+import { ListarProdutosComponent } from './produtos/listar-produtos/listar-produtos.component';
 import { ComponentsModule } from './components/components.module';
 import { CadastrarCategoriaComponent } from './categorias/cadastrar-categoria/cadastrar-categoria.component';
+import { FileUploadModule } from 'ng2-file-upload';
+import { HttpModule } from '@angular/http';
 
 @NgModule({
   declarations: [
@@ -41,7 +43,9 @@ import { CadastrarCategoriaComponent } from './categorias/cadastrar-categoria/ca
     HomeModule,
     FontAwesomeModule,
     ReactiveFormsModule,
-    ComponentsModule
+    ComponentsModule,
+    FileUploadModule,
+    HttpModule
   ],
   providers: [],
   bootstrap: [AppComponent]

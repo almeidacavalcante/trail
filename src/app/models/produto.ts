@@ -14,7 +14,6 @@ export class Produto {
     private _categoria: string;
 
     constructor(
-        id: string,
         nome: string,
         descricao: string,
         preco: number,
@@ -24,7 +23,8 @@ export class Produto {
         dataValidade: Date,
         isPerecivel: boolean,
         isPublico: boolean,
-        categoria: string
+        categoria: string,
+        id?: string
     ) {
         this.id = id;
         this.nome = nome;
@@ -103,7 +103,6 @@ export class Produto {
     public set categoria(v: string) {
         this._categoria = v;
     }
-
     public get isPublico(): boolean {
         return this._isPublico;
     }
