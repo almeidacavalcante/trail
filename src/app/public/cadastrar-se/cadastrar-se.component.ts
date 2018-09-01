@@ -2,6 +2,9 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { FormGroup, Validators } from '@angular/forms';
 import { FormControl } from '@angular/forms';
+import { Pessoa } from '../../models/pessoa';
+import { RequestService } from '../../services/api/request.service';
+import { PessoasService } from '../../services/pessoas.service';
 
 @Component({
   selector: 'app-cadastrar-se',
@@ -24,9 +27,15 @@ export class CadastrarSeComponent implements OnInit {
     telefone: new FormControl(),
   });
 
-  constructor(private modalService: NgbModal) { }
+  constructor(
+    private modalService: NgbModal,
+    private pessoasService: PessoasService
+  ) { }
 
   ngOnInit() {
+    this.pessoasService.getAll().subscribe(pessoas => {
+      console.log(pessoas);
+    });
   }
 
   open(content) {
@@ -51,7 +60,17 @@ export class CadastrarSeComponent implements OnInit {
    * cadastrarPessoa
    */
   public cadastrarPessoa() {
-    console.log(this._cadastroForm);
+    const pessoa = new Pessoa();
+
+    pessoa.email = this.email.value;
+    pessoa.senha = this.senha.value;
+    pessoa.cpf = this.cpf.value;
+    pessoa.dataNascimento = this.dataNascimento.value;
+    pessoa.telefone = this.telefone.value;
+    pessoa.nome = this.nome.value;
+
+    this.pessoasService.adicionarPessoa(pessoa);
+
     this.modalService.dismissAll();
     this.cadastroForm.reset();
   }

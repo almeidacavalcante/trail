@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ProdutoService } from '../../services/produto.service';
-import { Produto } from '../../models/produto';
+import { ProdutoService } from '../../../services/produto.service';
+import { Produto } from '../../../models/produto';
 import { Subscription } from 'rxjs';
 import { FormGroup, FormControl, AbstractControl } from '@angular/forms';
 

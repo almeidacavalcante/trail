@@ -3,14 +3,14 @@ import { CommonModule, } from '@angular/common';
 import { BrowserModule  } from '@angular/platform-browser';
 import { Routes, RouterModule } from '@angular/router';
 
-import { ProfileComponent } from './profile/profile.component';
-import { SignupComponent } from './signup/signup.component';
-import { NucleoiconsComponent } from './components/nucleoicons/nucleoicons.component';
-import { LandingComponent } from './landing/landing.component';
-import { HomeComponent } from './home/home.component';
-import { CadastrarProdutoComponent } from './produtos/cadastrar-produto/cadastrar-produto.component';
-import { ListarProdutosComponent } from './produtos/listar-produtos/listar-produtos.component';
-import { CadastrarCategoriaComponent } from './categorias/cadastrar-categoria/cadastrar-categoria.component';
+import { ProfileComponent } from './public/profile/profile.component';
+import { SignupComponent } from './public/signup/signup.component';
+import { NucleoiconsComponent } from './admin/components/nucleoicons/nucleoicons.component';
+import { LandingComponent } from './public/landing/landing.component';
+import { HomeComponent } from './public/home/home.component';
+import { CadastrarProdutoComponent } from './admin/produtos/cadastrar-produto/cadastrar-produto.component';
+import { ListarProdutosComponent } from './admin/produtos/listar-produtos/listar-produtos.component';
+import { CadastrarCategoriaComponent } from './admin/categorias/cadastrar-categoria/cadastrar-categoria.component';
 
 const routes: Routes = [
     { path: 'home',                 component: HomeComponent },
