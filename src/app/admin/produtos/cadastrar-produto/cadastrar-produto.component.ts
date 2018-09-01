@@ -1,12 +1,12 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, AbstractControl } from '@angular/forms';
-import { Produto } from '../../models/produto';
-import { ProdutoService } from '../../services/produto.service';
+import { Produto } from '../../../models/produto';
+import { ProdutoService } from '../../../services/produto.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import * as moment from 'moment';
-import { CategoriaService } from '../../services/categoria.service';
-import { Categoria } from '../../models/categoria';
+import { CategoriaService } from '../../../services/categoria.service';
+import { Categoria } from '../../../models/categoria';
 
 @Component({
   selector: 'app-cadastrar-produto',
