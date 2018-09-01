@@ -1,3 +1,8 @@
+html {
+    overflow: -moz-scrollbars-vertical; 
+    overflow-y: scroll;
+}
+
 .gold {
     color: goldenrod;
 }
@@ -9,3 +14,19 @@ table {
         }
     }
 }
+
+h2 {
+    margin-bottom: -0.5em;
+}
+
+h4 {
+    margin-bottom: -2em;
+}
+
+label {
+    margin-bottom: 0px;
+}
+
+.col .col-md-6 .col-md-12 {
+    margin-bottom: 1em;
+} 

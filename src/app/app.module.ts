@@ -21,6 +21,7 @@ import { ComponentsModule } from './components/components.module';
 import { CadastrarCategoriaComponent } from './categorias/cadastrar-categoria/cadastrar-categoria.component';
 import { FileUploadModule } from 'ng2-file-upload';
 import { HttpModule } from '@angular/http';
+import { CadastrarSeComponent } from './cadastrar-se/cadastrar-se.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { HttpModule } from '@angular/http';
     ProfileComponent,
     CadastrarProdutoComponent,
     ListarProdutosComponent,
-    CadastrarCategoriaComponent
+    CadastrarCategoriaComponent,
+    CadastrarSeComponent
   ],
   imports: [
     BrowserModule,
@@ -45,7 +47,8 @@ import { HttpModule } from '@angular/http';
     ReactiveFormsModule,
     ComponentsModule,
     FileUploadModule,
-    HttpModule
+    HttpModule,
+    NgbModule
   ],
   providers: [],
   bootstrap: [AppComponent]
