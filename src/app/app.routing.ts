@@ -11,6 +11,8 @@ import { HomeComponent } from './public/home/home.component';
 import { CadastrarProdutoComponent } from './admin/produtos/cadastrar-produto/cadastrar-produto.component';
 import { ListarProdutosComponent } from './admin/produtos/listar-produtos/listar-produtos.component';
 import { CadastrarCategoriaComponent } from './admin/categorias/cadastrar-categoria/cadastrar-categoria.component';
+import { ListarPessoasComponent } from './admin/pessoas/listar-pessoas/listar-pessoas.component';
+import { AcompanhamentoComponent } from './admin/pessoas/acompanhamento/acompanhamento.component';
 
 const routes: Routes = [
     { path: 'home',                 component: HomeComponent },
@@ -20,7 +22,9 @@ const routes: Routes = [
     { path: 'landing',              component: LandingComponent },
     { path: 'cadastrar-produto',    component: CadastrarProdutoComponent },
     { path: 'listar-produtos',      component: ListarProdutosComponent },
-    { path: 'categorias',  component: CadastrarCategoriaComponent },
+    { path: 'pessoas',              component: ListarPessoasComponent },
+    { path: 'pessoas/:id',          component: AcompanhamentoComponent },
+    { path: 'categorias',           component: CadastrarCategoriaComponent },
 
     { path: '', redirectTo: 'home', pathMatch: 'full' }
 ];

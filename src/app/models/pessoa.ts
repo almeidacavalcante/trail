@@ -5,6 +5,7 @@ export class Pessoa {
     nome: string;
     dataNascimento: Date;
     telefone: string;
+    id: string;
 
     constructor() {}
 }

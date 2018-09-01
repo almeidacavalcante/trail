@@ -22,6 +22,8 @@ import { CadastrarCategoriaComponent } from './admin/categorias/cadastrar-catego
 import { FileUploadModule } from 'ng2-file-upload';
 import { HttpModule } from '@angular/http';
 import { CadastrarSeComponent } from './public/cadastrar-se/cadastrar-se.component';
+import { ListarPessoasComponent } from './admin/pessoas/listar-pessoas/listar-pessoas.component';
+import { AcompanhamentoComponent } from './admin/pessoas/acompanhamento/acompanhamento.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +36,9 @@ import { CadastrarSeComponent } from './public/cadastrar-se/cadastrar-se.compone
     CadastrarProdutoComponent,
     ListarProdutosComponent,
     CadastrarCategoriaComponent,
-    CadastrarSeComponent
+    CadastrarSeComponent,
+    ListarPessoasComponent,
+    AcompanhamentoComponent
   ],
   imports: [
     BrowserModule,

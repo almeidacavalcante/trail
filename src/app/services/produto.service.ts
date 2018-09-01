@@ -19,9 +19,9 @@ export class ProdutoService {
   }
 
   private carregarProdutos() {
-    this.getAll().subscribe((produtos: Response) => {
-      const json = produtos.json();
-      json.forEach(p => {
+    this.getAll().subscribe((res: Response) => {
+      const jsonProdutos = res.json();
+      jsonProdutos.forEach(p => {
         this.produtos.push(new Produto(p['_nome'], p['_descricao'], p['_preco'], p['_precoPromocional'], p['_isPromocao'],
           p['_estoque'], new Date(p['_dataValidade']), p['_isPerecivel'], p['_isPublico'], p['_categoria'], p['_id']));
       });
