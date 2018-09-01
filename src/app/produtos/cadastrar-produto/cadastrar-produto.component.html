@@ -31,14 +31,12 @@
                     </span>
                     <input formControlName="nome" type="text" class="form-control" placeholder="Nome">
                   </div>
-                  <br>
                 </div>
               </div>
               <div class="row">
                 <div class="col-md-12">
                   <h6>Descrição</h6>
                   <textarea formControlName="descricao" class="form-control" rows="4" placeholder="Detalhe o produto que está sendo cadastrado..."></textarea>
-                  <br>
                 </div>
               </div>
               <div class="row">
@@ -50,7 +48,6 @@
                     </span>
                     <input formControlName="preco" type="text" class="form-control" placeholder="Preço de venda">
                   </div>
-                  <br>
                 </div>
                 <div class="col-md-6">
                   <h6>Estoque</h6>
@@ -60,7 +57,6 @@
                     </span>
                     <input formControlName="estoque" type="text" class="form-control" placeholder="Quantidade de produtos em estoque">
                   </div>
-                  <br>
                 </div>
               </div>
               <div class="row">
@@ -72,7 +68,6 @@
                     </span>
                     <input formControlName="precoPromocional" type="text" class="form-control" placeholder="Preço promocional">
                   </div>
-                  <br>
                 </div>
                 <div class="col-md-6">
                   <h6>Data de Validade</h6>
@@ -107,7 +102,6 @@
                     <option value="" selected>- Selecione -</option>
                     <option *ngFor="let c of categorias" value="c.id">{{c.nome}}</option>
                   </select>
-                  <br>
                 </div>
               </div>
 
@@ -122,7 +116,6 @@
 
               <div class="row">
                 <div class="col-md-12">
-                  <br>
                   <button type="button" (click)="cadastrarProduto(true)" class="btn btn-warning btn-lg btn-fill fill">Cadastrar e Publicar</button>
                 </div>
               </div>
