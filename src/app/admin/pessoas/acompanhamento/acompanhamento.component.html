@@ -6,18 +6,13 @@
         <div class="container">
             <div class="owner">
                 <div class="avatar">
-                    <img src="../assets/img/faces/joe-gardner-2.jpg" alt="Circle Image" class="img-circle img-no-padding img-responsive">
+                    <img src="../assets/img/avatar.png" alt="Circle Image" class="img-circle img-no-padding img-responsive">
                 </div>
                 <div class="name">
-                    <h4 class="title">Jane Faker<br /></h4>
-                    <h6 class="description">Music Producer</h6>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6 ml-auto mr-auto text-center">
-                    <p>An artist of considerable range, Jane Faker — the name taken by Melbourne-raised, Brooklyn-based Nick Murphy — writes, performs and records all of his own music, giving it a warm, intimate feel with a solid groove structure. </p>
-                    <br/>
-                    <button class="btn btn-outline-default btn-round"><i class="fa fa-cog"></i> Settings</button>
+                    <h4 class="title">{{pessoa?.nome}}<br /></h4>
+                    <h5><b>Email:</b> {{pessoa?.email}} </h5>
+                    <h5><b>Telefone:</b> {{pessoa?.telefone}}</h5>
+                    <h5><b>CPF:</b> {{pessoa?.cpf}}</h5>
                 </div>
             </div>
             <br/>

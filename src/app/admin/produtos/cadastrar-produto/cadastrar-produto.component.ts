@@ -32,8 +32,8 @@ export class CadastrarProdutoComponent implements OnInit, OnDestroy {
   private _produto: Produto;
   private _categorias: Array<Categoria>;
 
-  private _subsProdutoService: Subscription;
-  private _subsCategoriaService: Subscription;
+  private _subscriptionProdutoService: Subscription;
+  private _subscriptionCategoriaService: Subscription;
 
 
   constructor(
@@ -44,7 +44,7 @@ export class CadastrarProdutoComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.subsProdutoService = this.activatedRoute.queryParamMap.subscribe(params => {
+    this.subscriptionProdutoService = this.activatedRoute.queryParamMap.subscribe(params => {
       console.log(params);
       if (params.get('id')) {
         this.produto = this.produtoService.getProdutoById(params.get('id'));
@@ -53,14 +53,18 @@ export class CadastrarProdutoComponent implements OnInit, OnDestroy {
     });
 
     this.categorias = this.categoriaService.categorias;
-    this.subsCategoriaService = this.categoriaService.novaCategoriaAdicionada.subscribe( categorias => {
+    this.subscriptionCategoriaService = this.categoriaService.novaCategoriaAdicionada.subscribe( categorias => {
       this.categorias = categorias;
     });
   }
 
   ngOnDestroy() {
-    this.subsProdutoService.unsubscribe();
-    this._subsCategoriaService.unsubscribe();
+    if (this._subscriptionProdutoService) {
+      this._subscriptionProdutoService.unsubscribe();
+    }
+    if (this._subscriptionCategoriaService) {
+      this._subscriptionCategoriaService.unsubscribe();
+    }
   }
 
   /**
@@ -158,17 +162,17 @@ export class CadastrarProdutoComponent implements OnInit, OnDestroy {
   public get id(): AbstractControl {
     return this.cadastrarProdutoForm.get('id');
   }
-  public get subsProdutoService(): Subscription {
-    return this._subsProdutoService;
+  public get subscriptionProdutoService(): Subscription {
+    return this._subscriptionProdutoService;
   }
-  public set subsProdutoService(v: Subscription) {
-    this._subsProdutoService = v;
+  public set subscriptionProdutoService(v: Subscription) {
+    this._subscriptionProdutoService = v;
   }
-  public get subsCategoriaService(): Subscription {
-    return this._subsCategoriaService;
+  public get subscriptionCategoriaService(): Subscription {
+    return this._subscriptionCategoriaService;
   }
-  public set subsCategoriaService(value: Subscription) {
-    this._subsCategoriaService = value;
+  public set subscriptionCategoriaService(value: Subscription) {
+    this._subscriptionCategoriaService = value;
   }
   public get categorias(): Array<Categoria> {
     return this._categorias;
