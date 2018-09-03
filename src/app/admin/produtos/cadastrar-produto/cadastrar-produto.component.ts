@@ -47,8 +47,10 @@ export class CadastrarProdutoComponent implements OnInit, OnDestroy {
     this.subscriptionProdutoService = this.activatedRoute.queryParamMap.subscribe(params => {
       console.log(params);
       if (params.get('id')) {
-        this.produto = this.produtoService.getProdutoById(params.get('id'));
-        this.carregarProduto();
+        this.produtoService.getProdutoById(params.get('id')).subscribe( (res: Response) => {
+          this.produto = this.produtoService.convertToProduto(res.json());
+          this.carregarProduto();
+        });
       }
     });
 
@@ -95,7 +97,6 @@ export class CadastrarProdutoComponent implements OnInit, OnDestroy {
    * cadastrarProduto
    */
   public cadastrarProduto(isPublico: boolean) {
-    console.log('FORM GROUP: ', this.cadastrarProdutoForm);
 
     this.produto = new Produto(
       this.nome.value,
@@ -107,8 +108,7 @@ export class CadastrarProdutoComponent implements OnInit, OnDestroy {
       new Date(this.dataValidade.value),
       this.isPerecivel.value,
       isPublico,
-      this.categoria.value,
-      this.id.value
+      this.categoria.value
     );
 
     this.produtoService.adicionarProduto(this.produto);

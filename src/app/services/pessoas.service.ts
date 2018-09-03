@@ -12,7 +12,7 @@ export class PessoasService {
   private _pessoas: Array<Pessoa> = new Array<Pessoa>();
   private _buscaRealizada: EventEmitter<Pessoa> = new EventEmitter<Pessoa>();
   private _novaPessoaCadastrada: EventEmitter<Array<Pessoa>> = new EventEmitter();
-  private _api = 'http://localhost:3000/pessoas';
+  private _api = 'http://localhost:3000/api/pessoas';
 
   constructor(
     private requestService: RequestService

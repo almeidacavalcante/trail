@@ -34,7 +34,9 @@ export class CadastrarCategoriaComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.subscription.unsubscribe();
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 
   /**
@@ -62,12 +64,13 @@ export class CadastrarCategoriaComponent implements OnInit, OnDestroy {
    * editarCategoria
    */
   public editarCategoria(id: string) {
-    const categoria = this.categoriaService.getCategoriaById(id);
-    this.carregarCategoria(categoria);
+    this.categoriaService.getCategoriaById(id).subscribe( res => {
+      this.carregarCategoria(<Categoria>res.json());
+    });
   }
 
   private carregarCategoria(categoria: Categoria) {
-    this.nome.setValue(categoria.nome);
+    this.nome.setValue(categoria.nome, {emitEvent: true});
     this.descricao.setValue(categoria.descricao);
     this.id.setValue(categoria.id);
   }
