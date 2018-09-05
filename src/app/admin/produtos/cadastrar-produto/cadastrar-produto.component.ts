@@ -44,20 +44,8 @@ export class CadastrarProdutoComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.subscriptionProdutoService = this.activatedRoute.queryParamMap.subscribe(params => {
-      console.log(params);
-      if (params.get('id')) {
-        this.produtoService.getProdutoById(params.get('id')).subscribe( (res: Response) => {
-          this.produto = this.produtoService.convertToProduto(res.json());
-          this.carregarProduto();
-        });
-      }
-    });
-
-    this.categorias = this.categoriaService.categorias;
-    this.subscriptionCategoriaService = this.categoriaService.novaCategoriaAdicionada.subscribe( categorias => {
-      this.categorias = categorias;
-    });
+    this.setupEditarProduto();
+    this.setupCategorias();
   }
 
   ngOnDestroy() {
@@ -67,6 +55,25 @@ export class CadastrarProdutoComponent implements OnInit, OnDestroy {
     if (this._subscriptionCategoriaService) {
       this._subscriptionCategoriaService.unsubscribe();
     }
+  }
+
+  private setupCategorias() {
+    this.categorias = this.categoriaService.categorias;
+    this.subscriptionCategoriaService = this.categoriaService.novaCategoriaAdicionada.subscribe(categorias => {
+      this.categorias = categorias;
+    });
+  }
+
+  private setupEditarProduto() {
+    this.subscriptionProdutoService = this.activatedRoute.queryParamMap.subscribe(params => {
+      // Caso haja id, trata-se de edição.
+      if (params.get('id')) {
+        this.produtoService.getProdutoById(params.get('id')).subscribe((res: Response) => {
+          this.produto = this.produtoService.convertToProduto(res.json());
+          this.carregarProduto();
+        });
+      }
+    });
   }
 
   /**
@@ -112,10 +119,6 @@ export class CadastrarProdutoComponent implements OnInit, OnDestroy {
     );
 
     this.produtoService.adicionarProduto(this.produto);
-
-    this.produtoService.produtos.forEach(produto => {
-      console.log('Produto: ', produto);
-    });
 
     this.router.navigate(['listar-produtos']);
   }

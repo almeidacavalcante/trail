@@ -32,11 +32,17 @@ export class RequestService {
    * put
    */
   public put(url: string, body: any, headers?: Headers): Observable<Response> {
-    console.log('RequestService ==>');
-    console.log(url);
-    console.log(body);
-
     return this.http.put(url, body, { headers: headers });
+  }
+
+  /**
+   * delete
+   */
+  public delete(url: string, body: any, headers?: Headers): Observable<Response> {
+    return this.http.delete(url, new RequestOptions({
+      headers: headers,
+      body: body
+    }));
   }
 
   public get fileUploaderURL(): string {

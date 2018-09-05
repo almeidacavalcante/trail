@@ -85,9 +85,10 @@ export class CadastrarCategoriaComponent implements OnInit, OnDestroy {
   /**
    * removeProduto
    */
-  public removerCategoria(index: number) {
-    this.categorias.splice(index, 1);
+  public removerCategoria(categoria: Categoria) {
+    this.categoriaService.removerCategoria(categoria);
   }
+
   public get categorias(): Array<Categoria> {
     return this._categorias;
   }

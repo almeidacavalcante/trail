@@ -28,9 +28,13 @@ export class CategoriaService {
 
   private carregarCategorias() {
     this.getAll().subscribe((res: Response) => {
+
       const jsonCategorias = res.json();
+      this._categorias = new Array<Categoria>();
+
       jsonCategorias.forEach(json => {
         this._categorias.push(this.convertToCategoria(json));
+        this.novaCategoriaAdicionada.emit(this.categorias);
       });
     });
   }
@@ -50,33 +54,38 @@ export class CategoriaService {
   }
 
   /**
-  * adicionarProduto
+  * cadastrarCategoria
   */
-  public cadastrarCategoria(c: Categoria) {
-    const json = JSON.stringify(c);
+  public cadastrarCategoria(categoria: Categoria) {
+    const json = JSON.stringify(categoria);
     const header = new Headers();
     header.append('content-type', 'application/json');
     this.requestService.post(this._api + '/add', json, header).subscribe((res: Response) => {
-      console.log(res);
+      this.carregarCategorias();
     });
-    this.novaCategoriaAdicionada.emit(this._categorias);
   }
 
+  /**
+  * editarCategoria
+  */
   public editarCategoria(categoria: Categoria) {
-    console.log('Categoria Service ==>');
-
-    const json = {
-      nome: categoria.nome,
-      descricao: categoria.descricao,
-      id: categoria.id
-    };
-
+    const json = JSON.stringify(categoria);
     const header = new Headers();
     header.append('content-type', 'application/json');
     this.requestService.put(this._api + '/edit', json, header).subscribe((res: Response) => {
-      console.log(res);
+      this.carregarCategorias();
     });
-    this.novaCategoriaAdicionada.emit(this._categorias);
+  }
+
+  /**
+   * removerCategoria
+   */
+  public removerCategoria(categoria: Categoria) {
+    const header = new Headers();
+    header.append('content-type', 'application/json');
+    this.requestService.delete(this._api + '/delete', categoria, header).subscribe((res: Response) => {
+      this.carregarCategorias();
+    });
   }
 
   public get categorias(): Array<Categoria> {
