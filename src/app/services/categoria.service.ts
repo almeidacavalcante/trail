@@ -29,12 +29,17 @@ export class CategoriaService {
   private carregarCategorias() {
     this.getAll().subscribe((res: Response) => {
       const jsonCategorias = res.json();
-      jsonCategorias.forEach(c => {
-        const categoria = new Categoria(c['nome'], c['descricao']);
-        categoria.id = c['_id'];
-        this._categorias.push(categoria);
+      jsonCategorias.forEach(json => {
+        this._categorias.push(this.convertToCategoria(json));
       });
     });
+  }
+
+
+  private convertToCategoria(json: any) {
+    const categoria = new Categoria(json['nome'], json['descricao']);
+    categoria.id = json['_id'];
+    return categoria;
   }
 
   /**
@@ -50,8 +55,25 @@ export class CategoriaService {
   public cadastrarCategoria(c: Categoria) {
     const json = JSON.stringify(c);
     const header = new Headers();
-    header.append('content-type', 'json');
+    header.append('content-type', 'application/json');
     this.requestService.post(this._api + '/add', json, header).subscribe((res: Response) => {
+      console.log(res);
+    });
+    this.novaCategoriaAdicionada.emit(this._categorias);
+  }
+
+  public editarCategoria(categoria: Categoria) {
+    console.log('Categoria Service ==>');
+
+    const json = {
+      nome: categoria.nome,
+      descricao: categoria.descricao,
+      id: categoria.id
+    };
+
+    const header = new Headers();
+    header.append('content-type', 'application/json');
+    this.requestService.put(this._api + '/edit', json, header).subscribe((res: Response) => {
       console.log(res);
     });
     this.novaCategoriaAdicionada.emit(this._categorias);

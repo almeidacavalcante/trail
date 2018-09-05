@@ -13,6 +13,7 @@ export class CadastrarCategoriaComponent implements OnInit, OnDestroy {
 
   private _categorias: Array<Categoria> = new Array<Categoria>();
   private _subscription: Subscription;
+  private _isEditing = false;
 
   private _cadastrarCategoriaForm: FormGroup = new FormGroup({
     nome: new FormControl(null, Validators.required),
@@ -48,8 +49,15 @@ export class CadastrarCategoriaComponent implements OnInit, OnDestroy {
       this.descricao.value
     );
 
-    this.categoriaService.cadastrarCategoria(categoria);
+    if (this.isEditing) {
+      categoria.id = this.id.value;
+      this.categoriaService.editarCategoria(categoria);
+    } else {
+      this.categoriaService.cadastrarCategoria(categoria);
+    }
+
     this.cadastrarCategoriaForm.reset();
+    this.isEditing = false;
   }
 
 
@@ -63,14 +71,13 @@ export class CadastrarCategoriaComponent implements OnInit, OnDestroy {
   /**
    * editarCategoria
    */
-  public editarCategoria(id: string) {
-    this.categoriaService.getCategoriaById(id).subscribe( res => {
-      this.carregarCategoria(<Categoria>res.json());
-    });
+  public carregarCategoriaEdicao(categoria: Categoria) {
+    this.isEditing = true;
+    this.carregarCategoria(categoria);
   }
 
   private carregarCategoria(categoria: Categoria) {
-    this.nome.setValue(categoria.nome, {emitEvent: true});
+    this.nome.setValue(categoria.nome, { emitEvent: true });
     this.descricao.setValue(categoria.descricao);
     this.id.setValue(categoria.id);
   }
@@ -113,5 +120,11 @@ export class CadastrarCategoriaComponent implements OnInit, OnDestroy {
   }
   public get id(): AbstractControl {
     return this._cadastrarCategoriaForm.get('id');
+  }
+  public get isEditing(): boolean {
+    return this._isEditing;
+  }
+  public set isEditing(value: boolean) {
+    this._isEditing = value;
   }
 }

@@ -26,7 +26,7 @@ export class CadastrarProdutoComponent implements OnInit, OnDestroy {
     dataValidade: new FormControl(),
     isPerecivel: new FormControl(),
     categoria: new FormControl(),
-    isPublico: new FormControl()
+    isPublico: new FormControl(false)
   });
 
   private _produto: Produto;
@@ -118,6 +118,13 @@ export class CadastrarProdutoComponent implements OnInit, OnDestroy {
     });
 
     this.router.navigate(['listar-produtos']);
+  }
+
+  /**
+   * editarProduto
+   */
+  public editarProduto() {
+    console.log('EDITAR PRODUTO!');
   }
 
   public get nome(): AbstractControl {

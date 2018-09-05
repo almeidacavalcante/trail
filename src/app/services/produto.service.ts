@@ -50,7 +50,7 @@ export class ProdutoService {
   public adicionarProduto(produto: Produto) {
     console.log(JSON.stringify(produto));
     const header = new Headers();
-    header.append('content-type', 'json');
+    header.append('content-type', 'application/json');
     this.requestService.post(this._api + '/add', JSON.stringify(produto), header).subscribe((res: Response) => {
 
     });

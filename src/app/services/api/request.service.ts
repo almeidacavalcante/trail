@@ -24,7 +24,19 @@ export class RequestService {
    * post
    */
   public post(url: string, body: any, headers?: Headers) {
-    return this.http.post(url, body, {headers: headers});
+    return this.http.post(url, body, { headers: headers });
+  }
+
+
+  /**
+   * put
+   */
+  public put(url: string, body: any, headers?: Headers): Observable<Response> {
+    console.log('RequestService ==>');
+    console.log(url);
+    console.log(body);
+
+    return this.http.put(url, body, { headers: headers });
   }
 
   public get fileUploaderURL(): string {

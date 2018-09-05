@@ -40,7 +40,8 @@
 
               <div class="row">
                 <div class="col-md-12 mr-auto ml-auto">
-                  <button type="submit" [disabled]="!cadastrarCategoriaForm.valid" class="btn btn-success btn-lg btn-fill fill">Cadastrar</button>
+                  <button type="submit" *ngIf="!isEditing" [disabled]="!cadastrarCategoriaForm.valid" class="btn btn-success btn-lg btn-fill fill">Cadastrar</button>
+                  <button type="submit" *ngIf="isEditing" [disabled]="!cadastrarCategoriaForm.valid" class="btn btn-success btn-lg btn-fill fill">Editar</button>
                 </div>
               </div>
             </div>
@@ -91,7 +92,7 @@
                             <td>{{c.descricao}}</td>
 
                             <td class="td-actions text-right">
-                              <button class="btn btn-info btn-link btn-sm" (click)="editarCategoria(c.id)" ngbtooltip="View Profile" type="button">
+                              <button class="btn btn-info btn-link btn-sm" (click)="carregarCategoriaEdicao(c)" ngbtooltip="View Profile" type="button">
                                 <i class="fa fa-edit"></i></button>
 
                               <button (click)="removerCategoria(i)" class="btn btn-danger btn-link btn-sm" ngbtooltip="Remove" type="button">

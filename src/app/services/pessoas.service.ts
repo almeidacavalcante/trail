@@ -24,7 +24,7 @@ export class PessoasService {
   public adicionarPessoa(pessoa: Pessoa) {
     const json = JSON.stringify(pessoa);
     const header = new Headers();
-    header.append('content-type', 'json');
+    header.append('content-type', 'application/json');
     this.requestService.post(this._api + '/add', json, header).subscribe((res: Response) => {
       console.log(res);
     });
