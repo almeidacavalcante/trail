@@ -22,6 +22,7 @@ export class ListarProdutosComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.produtos = this.produtoService.produtos;
+    console.log('PRODUTOS: ', this.produtos);
     this.subscription = this.produtoService.novoProdutoCadastrado.subscribe(produtos => {
       this.produtos = produtos;
     });

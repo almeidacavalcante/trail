@@ -24,7 +24,25 @@ export class RequestService {
    * post
    */
   public post(url: string, body: any, headers?: Headers) {
-    return this.http.post(url, body, {headers: headers});
+    return this.http.post(url, body, { headers: headers });
+  }
+
+
+  /**
+   * put
+   */
+  public put(url: string, body: any, headers?: Headers): Observable<Response> {
+    return this.http.put(url, body, { headers: headers });
+  }
+
+  /**
+   * delete
+   */
+  public delete(url: string, body: any, headers?: Headers): Observable<Response> {
+    return this.http.delete(url, new RequestOptions({
+      headers: headers,
+      body: body
+    }));
   }
 
   public get fileUploaderURL(): string {

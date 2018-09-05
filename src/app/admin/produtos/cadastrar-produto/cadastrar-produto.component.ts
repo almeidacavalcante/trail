@@ -26,14 +26,14 @@ export class CadastrarProdutoComponent implements OnInit, OnDestroy {
     dataValidade: new FormControl(),
     isPerecivel: new FormControl(),
     categoria: new FormControl(),
-    isPublico: new FormControl()
+    isPublico: new FormControl(false)
   });
 
   private _produto: Produto;
   private _categorias: Array<Categoria>;
 
-  private _subsProdutoService: Subscription;
-  private _subsCategoriaService: Subscription;
+  private _subscriptionProdutoService: Subscription;
+  private _subscriptionCategoriaService: Subscription;
 
 
   constructor(
@@ -44,23 +44,36 @@ export class CadastrarProdutoComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.subsProdutoService = this.activatedRoute.queryParamMap.subscribe(params => {
-      console.log(params);
-      if (params.get('id')) {
-        this.produto = this.produtoService.getProdutoById(params.get('id'));
-        this.carregarProduto();
-      }
-    });
+    this.setupEditarProduto();
+    this.setupCategorias();
+  }
 
+  ngOnDestroy() {
+    if (this._subscriptionProdutoService) {
+      this._subscriptionProdutoService.unsubscribe();
+    }
+    if (this._subscriptionCategoriaService) {
+      this._subscriptionCategoriaService.unsubscribe();
+    }
+  }
+
+  private setupCategorias() {
     this.categorias = this.categoriaService.categorias;
-    this.subsCategoriaService = this.categoriaService.novaCategoriaAdicionada.subscribe( categorias => {
+    this.subscriptionCategoriaService = this.categoriaService.novaCategoriaAdicionada.subscribe(categorias => {
       this.categorias = categorias;
     });
   }
 
-  ngOnDestroy() {
-    this.subsProdutoService.unsubscribe();
-    this._subsCategoriaService.unsubscribe();
+  private setupEditarProduto() {
+    this.subscriptionProdutoService = this.activatedRoute.queryParamMap.subscribe(params => {
+      // Caso haja id, trata-se de edição.
+      if (params.get('id')) {
+        this.produtoService.getProdutoById(params.get('id')).subscribe((res: Response) => {
+          this.produto = this.produtoService.convertToProduto(res.json());
+          this.carregarProduto();
+        });
+      }
+    });
   }
 
   /**
@@ -91,7 +104,6 @@ export class CadastrarProdutoComponent implements OnInit, OnDestroy {
    * cadastrarProduto
    */
   public cadastrarProduto(isPublico: boolean) {
-    console.log('FORM GROUP: ', this.cadastrarProdutoForm);
 
     this.produto = new Produto(
       this.nome.value,
@@ -103,17 +115,19 @@ export class CadastrarProdutoComponent implements OnInit, OnDestroy {
       new Date(this.dataValidade.value),
       this.isPerecivel.value,
       isPublico,
-      this.categoria.value,
-      this.id.value
+      this.categoria.value
     );
 
     this.produtoService.adicionarProduto(this.produto);
 
-    this.produtoService.produtos.forEach(produto => {
-      console.log('Produto: ', produto);
-    });
-
     this.router.navigate(['listar-produtos']);
+  }
+
+  /**
+   * editarProduto
+   */
+  public editarProduto() {
+    console.log('EDITAR PRODUTO!');
   }
 
   public get nome(): AbstractControl {
@@ -158,17 +172,17 @@ export class CadastrarProdutoComponent implements OnInit, OnDestroy {
   public get id(): AbstractControl {
     return this.cadastrarProdutoForm.get('id');
   }
-  public get subsProdutoService(): Subscription {
-    return this._subsProdutoService;
+  public get subscriptionProdutoService(): Subscription {
+    return this._subscriptionProdutoService;
   }
-  public set subsProdutoService(v: Subscription) {
-    this._subsProdutoService = v;
+  public set subscriptionProdutoService(v: Subscription) {
+    this._subscriptionProdutoService = v;
   }
-  public get subsCategoriaService(): Subscription {
-    return this._subsCategoriaService;
+  public get subscriptionCategoriaService(): Subscription {
+    return this._subscriptionCategoriaService;
   }
-  public set subsCategoriaService(value: Subscription) {
-    this._subsCategoriaService = value;
+  public set subscriptionCategoriaService(value: Subscription) {
+    this._subscriptionCategoriaService = value;
   }
   public get categorias(): Array<Categoria> {
     return this._categorias;

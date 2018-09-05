@@ -1,5 +1,8 @@
 import { Injectable, EventEmitter } from '@angular/core';
 import { Categoria } from '../models/categoria';
+import { RequestService } from './api/request.service';
+import { Headers, Response } from '@angular/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -8,46 +11,81 @@ export class CategoriaService {
 
   private _categorias: Array<Categoria> = new Array<Categoria>();
   private _novaCategoriaAdicionada: EventEmitter<Array<Categoria>> = new EventEmitter<Array<Categoria>>();
+  private _buscaRealizada: EventEmitter<Categoria> = new EventEmitter<Categoria>();
+  private _api = 'http://localhost:3000/api/categorias';
 
-  constructor() {
-    this.carregarCategoriasMock();
+
+
+  constructor(
+    private requestService: RequestService
+  ) {
+    this.carregarCategorias();
   }
 
-  private carregarCategoriasMock() {
-    const p1 = new Categoria('Alimentos', 'Categoria Alimentícia');
-    const p2 = new Categoria('Bebidas', 'Categoria de Bebidas');
-    const p3 = new Categoria('Biscoitos', 'Categoria de Biscoitos');
-    const p4 = new Categoria('Carnes', 'Categoria de Carnes');
-    const p5 = new Categoria('Eletrônicos', 'Categoria de Eletro-domésticos e eletrônicos');
-    const p6 = new Categoria('Vestuário', 'Categoria de Roupas e Calçados');
+  public getAll(): Observable<any> {
+    return this.requestService.get(this._api + '/getAll');
+  }
 
-    p1.id = '1';
-    p2.id = '2';
-    p3.id = '3';
-    p4.id = '4';
-    p5.id = '5';
-    p6.id = '6';
+  private carregarCategorias() {
+    this.getAll().subscribe((res: Response) => {
 
-    this.categorias.push(p1, p2, p3, p4, p5, p6);
+      const jsonCategorias = res.json();
+      this._categorias = new Array<Categoria>();
+
+      jsonCategorias.forEach(json => {
+        this._categorias.push(this.convertToCategoria(json));
+        this.novaCategoriaAdicionada.emit(this.categorias);
+      });
+    });
+  }
+
+
+  private convertToCategoria(json: any) {
+    const categoria = new Categoria(json['nome'], json['descricao']);
+    categoria.id = json['_id'];
+    return categoria;
   }
 
   /**
    * getCategoriaById
    */
-  public getCategoriaById(id: string): Categoria {
-    const produtoSelecionado = this.categorias.filter((categoria, index) => {
-      return categoria.id === id;
-    });
-
-    return produtoSelecionado[0];
+  public getCategoriaById(id: string): Observable<any> {
+    return this.requestService.get(this._api + '/' + id);
   }
 
   /**
-   * cadastrarCategoria
+  * cadastrarCategoria
+  */
+  public cadastrarCategoria(categoria: Categoria) {
+    const json = JSON.stringify(categoria);
+    const header = new Headers();
+    header.append('content-type', 'application/json');
+    this.requestService.post(this._api + '/add', json, header).subscribe((res: Response) => {
+      this.carregarCategorias();
+    });
+  }
+
+  /**
+  * editarCategoria
+  */
+  public editarCategoria(categoria: Categoria) {
+    const json = JSON.stringify(categoria);
+    const header = new Headers();
+    header.append('content-type', 'application/json');
+    this.requestService.put(this._api + '/edit', json, header).subscribe((res: Response) => {
+      this.carregarCategorias();
+    });
+  }
+
+  /**
+   * removerCategoria
    */
-  public cadastrarCategoria(c: Categoria) {
-    this._categorias.push(c);
-    this._novaCategoriaAdicionada.emit(this._categorias);
+  public removerCategoria(categoria: Categoria) {
+    const header = new Headers();
+    header.append('content-type', 'application/json');
+    this.requestService.delete(this._api + '/delete', categoria, header).subscribe((res: Response) => {
+      this.carregarCategorias();
+    });
   }
 
   public get categorias(): Array<Categoria> {
@@ -56,5 +94,11 @@ export class CategoriaService {
 
   public get novaCategoriaAdicionada(): EventEmitter<Array<Categoria>> {
     return this._novaCategoriaAdicionada;
+  }
+  public get buscaRealizada(): EventEmitter<Categoria> {
+    return this._buscaRealizada;
+  }
+  public set buscaRealizada(v: EventEmitter<Categoria>) {
+    this._buscaRealizada = v;
   }
 }

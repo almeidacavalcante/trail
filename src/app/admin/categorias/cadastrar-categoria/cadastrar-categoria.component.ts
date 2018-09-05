@@ -13,6 +13,7 @@ export class CadastrarCategoriaComponent implements OnInit, OnDestroy {
 
   private _categorias: Array<Categoria> = new Array<Categoria>();
   private _subscription: Subscription;
+  private _isEditing = false;
 
   private _cadastrarCategoriaForm: FormGroup = new FormGroup({
     nome: new FormControl(null, Validators.required),
@@ -34,7 +35,9 @@ export class CadastrarCategoriaComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.subscription.unsubscribe();
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 
   /**
@@ -46,8 +49,15 @@ export class CadastrarCategoriaComponent implements OnInit, OnDestroy {
       this.descricao.value
     );
 
-    this.categoriaService.cadastrarCategoria(categoria);
+    if (this.isEditing) {
+      categoria.id = this.id.value;
+      this.categoriaService.editarCategoria(categoria);
+    } else {
+      this.categoriaService.cadastrarCategoria(categoria);
+    }
+
     this.cadastrarCategoriaForm.reset();
+    this.isEditing = false;
   }
 
 
@@ -61,13 +71,13 @@ export class CadastrarCategoriaComponent implements OnInit, OnDestroy {
   /**
    * editarCategoria
    */
-  public editarCategoria(id: string) {
-    const categoria = this.categoriaService.getCategoriaById(id);
+  public carregarCategoriaEdicao(categoria: Categoria) {
+    this.isEditing = true;
     this.carregarCategoria(categoria);
   }
 
   private carregarCategoria(categoria: Categoria) {
-    this.nome.setValue(categoria.nome);
+    this.nome.setValue(categoria.nome, { emitEvent: true });
     this.descricao.setValue(categoria.descricao);
     this.id.setValue(categoria.id);
   }
@@ -75,9 +85,10 @@ export class CadastrarCategoriaComponent implements OnInit, OnDestroy {
   /**
    * removeProduto
    */
-  public removerCategoria(index: number) {
-    this.categorias.splice(index, 1);
+  public removerCategoria(categoria: Categoria) {
+    this.categoriaService.removerCategoria(categoria);
   }
+
   public get categorias(): Array<Categoria> {
     return this._categorias;
   }
@@ -110,5 +121,11 @@ export class CadastrarCategoriaComponent implements OnInit, OnDestroy {
   }
   public get id(): AbstractControl {
     return this._cadastrarCategoriaForm.get('id');
+  }
+  public get isEditing(): boolean {
+    return this._isEditing;
+  }
+  public set isEditing(value: boolean) {
+    this._isEditing = value;
   }
 }
